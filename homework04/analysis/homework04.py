@@ -21,7 +21,7 @@ The provided dataset contains the following attributes:
 """
 
 import pandas as pd
-import numpy
+import numpy as np
 
 
 def load_dataset(train_file_path: str, test_file_path: str) -> pd.DataFrame:
@@ -32,7 +32,7 @@ def load_dataset(train_file_path: str, test_file_path: str) -> pd.DataFrame:
     `train_file_path`, and 'data/test.csv'  as `test_file_path`). Add column
     name "Label" to each DataFrame. The column should contain value "Train"
     for data from `train_file_path` and "Test" from test_file_path.
-    
+
     Perform following operations with DataFrames (keep the order of the
     operations):
         1. Concatenate both DataFrames.
@@ -41,9 +41,24 @@ def load_dataset(train_file_path: str, test_file_path: str) -> pd.DataFrame:
 
     The return value of the function is processed DataFrame.
     """
+    train_df = pd.read_csv(train_file_path)
+    test_df = pd.read_csv(test_file_path)
 
-    # Implement your own solution
-    pass
+    # Add "Label" column and set values based on file source
+    train_df['Label'] = 'Train'
+    test_df['Label'] = 'Test'
+
+    # Concatenate both DataFrames
+    df = pd.concat([train_df, test_df], ignore_index=True)
+
+    # Remove specified columns
+    columns_to_remove = ["Ticket", "Embarked", "Cabin"]
+    df = df.drop(columns=columns_to_remove)
+
+    # Set the index to unique numbers from zero to the number of rows
+    df = df.set_index(pd.RangeIndex(start=0, stop=len(df)))
+
+    return df
 
 
 def get_missing_values(df: pd.DataFrame) -> pd.DataFrame:
@@ -63,16 +78,26 @@ def get_missing_values(df: pd.DataFrame) -> pd.DataFrame:
 
     Sort the resulting DataFrame based on the number of missing values from
     largest to smallest.
-    
+
     Example of output:
 
                |  Total  |  Percent
     "Column1"  |   34.5  |    76.54321
     "Column2"  |   0     |    0
     """
+    # Calculate total missing values
+    total_missing = df.isnull().sum()
 
-    # Implement your own solution
-    pass
+    # Calculate percentage of missing values
+    percent_missing = (total_missing / len(df)) * 100
+
+    # Create a new DataFrame with "Total" and "Percent" columns
+    result_df = pd.DataFrame({"Total": total_missing, "Percent": percent_missing})
+
+    # Sort the DataFrame based on the "Total" column in descending order
+    result_df = result_df.sort_values(by="Total", ascending=False)
+
+    return result_df
 
 
 def substitute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
@@ -87,8 +112,18 @@ def substitute_missing_values(df: pd.DataFrame) -> pd.DataFrame:
     Do not to modify given DataFrame but create a copy of it.
     """
 
-    # Implement your own solution
-    pass
+    # Create a copy of the input DataFrame to avoid modifying the original
+    df_copy = df.copy()
+
+    # Substitute missing values in the "Age" column with the mean
+    age_mean = df_copy['Age'].mean()
+    df_copy['Age'].fillna(age_mean, inplace=True)
+
+    # Substitute missing values in the "Fare" column with the lowest price of ~$15
+    lowest_fare = 15.0
+    df_copy['Fare'].fillna(lowest_fare, inplace=True)
+
+    return df_copy
 
 
 def get_correlation(df: pd.DataFrame) -> float:
@@ -105,8 +140,10 @@ def get_correlation(df: pd.DataFrame) -> float:
     relationship, 1 indicates strong relationship.
     """
 
-    # Implement your own solution
-    pass
+    # Calculate the Pearson correlation coefficient between "Age" and "Fare"
+    correlation_coefficient = df['Age'].corr(df['Fare'])
+
+    return correlation_coefficient
 
 
 def get_survived_per_class(df: pd.DataFrame,
@@ -119,7 +156,7 @@ def get_survived_per_class(df: pd.DataFrame,
     To increase readability of the result sort values from the highest chance of
     survival to lowest and round the resulting values to 2 decimal places.
     Return result as pandas Series.
-    
+
     Example:
 
     get_survived_per_class(df, "Sex")
@@ -130,8 +167,13 @@ def get_survived_per_class(df: pd.DataFrame,
 
     """
 
-    # Implement your own solution
-    pass
+    # Group the DataFrame by the specified column and calculate the mean of the "Survived" column
+    survived_per_class = df.groupby(group_by_column_name)['Survived'].mean()
+
+    # Sort values from highest to lowest and round to 2 decimal places
+    survived_per_class = survived_per_class.sort_values(ascending=False).round(2)
+
+    return survived_per_class
 
 
 def get_outliers(df: pd.DataFrame) -> (int, pd.DataFrame):
@@ -153,8 +195,20 @@ def get_outliers(df: pd.DataFrame) -> (int, pd.DataFrame):
     fare ticket price.
     """
 
-    # Implement your own solution
-    pass
+    # Calculate the first and third quartiles
+    q1 = df['Fare'].quantile(0.25)
+    q3 = df['Fare'].quantile(0.75)
+
+    # Calculate the inter-quartile range (IQR)
+    iqr = q3 - q1
+
+    # Identify outliers based on the IQR method
+    lower_bound = q1 - 1.5 * iqr
+    upper_bound = q3 + 1.5 * iqr
+
+    outliers = df[(df['Fare'] < lower_bound) | (df['Fare'] > upper_bound)]
+
+    return len(outliers), outliers
 
 
 def create_new_features(df: pd.DataFrame) -> pd.DataFrame:
@@ -178,8 +232,20 @@ def create_new_features(df: pd.DataFrame) -> pd.DataFrame:
     Do not modify original DataFrame.
     """
 
-    # Implement your own solution
-    pass
+    # Create a copy of the original DataFrame
+    new_df = df.copy()
+
+    # Feature 1: "Fare_scaled"
+    new_df['Fare_scaled'] = (new_df['Fare'] - new_df['Fare'].mean()) / new_df['Fare'].std()
+
+    # Feature 2: "Age_log"
+    new_df['Age_log'] = np.log(new_df['Age'])
+
+    # Feature 3: "Sex"
+    sex_mapping = {'male': 0, 'female': 1}
+    new_df['Sex'] = new_df['Sex'].map(sex_mapping).astype(int)
+
+    return new_df
 
 
 def determine_survival(df: pd.DataFrame, n_interval: int, age: float,
@@ -209,5 +275,23 @@ def determine_survival(df: pd.DataFrame, n_interval: int, age: float,
     NA value.
     """
 
-    # Implement your own solution
-    pass
+    # Create a copy of the original DataFrame
+    df_copy = df.copy()
+
+    # Replace missing values in the "Age" column with the mean
+    df_copy['Age'].fillna(df_copy['Age'].mean(), inplace=True)
+
+    # Divide "Age" into specified number of intervals
+    df_copy['AgeInterval'] = pd.cut(df_copy['Age'], bins=n_interval)
+
+    # Group by "AgeInterval" and "Sex" and calculate the survival probability
+    grouped_df = df_copy.groupby(['AgeInterval', 'Sex'])['Survived'].mean().reset_index()
+
+    # Filter the DataFrame based on the specified age and sex
+    filtered_df = grouped_df[(grouped_df['AgeInterval'].apply(lambda x: age in x)) & (grouped_df['Sex'] == sex)]
+
+    # If there is no passenger for the specified group, return numpy NA value
+    if filtered_df.empty:
+        return np.nan
+    # Extract and return the survival probability
+    return filtered_df['Survived'].values[0]
