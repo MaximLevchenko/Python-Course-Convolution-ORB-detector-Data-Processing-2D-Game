@@ -3,11 +3,10 @@
 """
 Version 0.1
 
-Cílem je vykreslit v "UTF16-artu" strom definovaný listem hodnot. Každý vnitřní uzel stromu obsahuje vždy dvě položky: název uzlu a seznam potomků (nemusí být nutně v tomto pořadí). Názvem může být jakýkoli objekt kromě typu list (seznam).
-
-Příklady validních stromů:
-    - triviální strom o 1 uzlu: [1, []]
-    - triviální strom o 1 uzlu s opačným pořadím ID a potomků: [[], 2]
+The goal is to render a tree defined by a list of values in "UTF16-art". Each internal node of the tree always contains two items: the node's name and a list of children (not necessarily in this order). The name can be any object except a list.
+Examples of valid trees:
+    - A trivial tree with 1 node: [1, []]
+    - A trivial tree with 1 node with the reversed order of ID and children: [[], 2]
     - triviální strom o 3 uzlech: [1, [2, 3]]
         (listové uzly ve stromu o výšce >= 2 mohou být pro zjednodušení zapsány i bez prázdného seznamu potomků)
 
