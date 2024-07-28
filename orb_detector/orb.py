@@ -8,7 +8,7 @@ from typing import Tuple
 import cv2
 import numpy as np
 
-from utils import apply_gaussian_2d
+from orb_detector.utils import apply_gaussian_2d
 
 PER_GROUP_COUNT = 9
 MAX_PIXEL_VALUE = 255
@@ -445,7 +445,7 @@ def fast(
 
 
 if __name__ == '__main__':
-    img = cv2.imread('test_images/corners.jpg', cv2.IMREAD_GRAYSCALE)
+    img = cv2.imread('tests/test_images/corners.jpg', cv2.IMREAD_GRAYSCALE)
     res,score = detect_keypoints(img, 20, 3)
     # result = get_x_derivative(img)
     # result2 = get_y_derivative(img)

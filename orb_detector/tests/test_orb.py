@@ -5,8 +5,9 @@ import numpy as np
 # from scipy.signal import convolve2d
 # from scipy.spatial.distance import cdist
 from pathlib import Path
+
+from orb_detector import orb
 # from utils import apply_gaussian_2d
-import orb
 import inspect
 from pylint.lint import Run
 from pylint.reporters import CollectingReporter

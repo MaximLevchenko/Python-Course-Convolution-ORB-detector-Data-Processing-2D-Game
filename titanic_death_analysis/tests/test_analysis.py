@@ -5,7 +5,7 @@ from pylint.reporters import CollectingReporter
 import numpy as np
 import pandas as pd
 import pytest
-from analysis.homework04 import load_dataset, get_missing_values, \
+from titanic_death_analysis.titanic_analysis import load_dataset, get_missing_values, \
     substitute_missing_values, \
     get_correlation, get_survived_per_class, get_outliers, create_new_features, \
     determine_survival

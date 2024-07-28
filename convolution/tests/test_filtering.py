@@ -8,21 +8,21 @@ from pylint.lint import Run
 from pylint.reporters import CollectingReporter
 from numpy.testing import assert_equal
 import numpy as np
-from filtering.helpers import read_image, identity_kernel, approx_gaussian_blur_5_kernel, edge_detection_kernel, \
+from convolution.filtering.helpers import read_image, identity_kernel, approx_gaussian_blur_5_kernel, edge_detection_kernel, \
     roberts_cross_1_kernel, roberts_cross_2_kernel
-from filtering.filtering import apply_filter
+from convolution.filtering.filtering import apply_filter
 
 
 @pytest.fixture(scope="session")
 def image():
     """ Loads base and overused image """
-    return read_image('tests/lenna.png')
+    return read_image('lenna.png')
 
 
 @pytest.fixture(scope="session")
 def image_gaussian_blur():
     """ Loads blurred image """
-    return read_image('tests/lenna_gaussian_blur.png')
+    return read_image('lenna_gaussian_blur.png')
 
 
 @pytest.fixture(scope="session")
@@ -34,13 +34,13 @@ def image_gray(image):
 @pytest.fixture(scope="session")
 def image_gray_edge_detection():
     """ Loads image for edge detection """
-    return read_image('tests/lenna_gray_edge_detection.png')
+    return read_image('lenna_gray_edge_detection.png')
 
 
 @pytest.fixture(scope="session")
 def image_roberts_cross():
     """ Loads image with roverts cross kernel applied """
-    return read_image('tests/lenna_roberts_cross.png')
+    return read_image('lenna_roberts_cross.png')
 
 
 @pytest.fixture(scope="session")
