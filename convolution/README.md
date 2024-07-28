@@ -40,3 +40,17 @@ image = np.array([...])  # Load your image as a numpy array
 kernel = np.array([...])  # Define your kernel
 filtered_image = apply_filter(image, kernel)
 ```
+## Testing
+
+Tests are provided in `test_filtering.py` and can be run using `pytest`. The tests include checks for different filters to ensure correctness.
+
+## Dependencies
+
+- `numpy`: For numerical operations and image representation.
+- `pytest`: For testing the implementation.
+
+Ensure that NumPy is installed in your environment. You can install it using pip:
+
+```bash
+pip install numpy pytest
+```
