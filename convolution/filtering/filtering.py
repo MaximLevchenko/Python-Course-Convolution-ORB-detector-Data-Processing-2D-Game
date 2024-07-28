@@ -2,8 +2,8 @@
 Module Description: This module contains functions for image filtering.
 """
 import numpy as np
-# import cv2
-# from PIL import Image
+import cv2
+from PIL import Image
 
 
 def pad_image(image: np.array, kernel_size: int) -> np.array:
@@ -72,21 +72,21 @@ def apply_filter(image: np.array, kernel: np.array) -> np.array:
 
 if __name__ == '__main__':
     print('')
-    # image = cv2.imread('../tests/lenna.png')
-    # image_np = np.array(image)
-    # image_should_be_three_d = np.asarray(Image.open('../tests/lenna.png'), dtype=np.uint8)
-    # image_should_be_two_d = np.average(image_should_be_three_d.astype(float), weights=[0.299, 0.587, 0.114],
-    #                                    axis=2).astype(np.uint8)
-    # image_main = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255]],
-    #                        [[128, 128, 128], [64, 64, 64], [192, 192, 192]],
-    #                        [[255, 255, 255], [0, 0, 0], [128, 128, 128]]])
-    # kernel_main = np.array([
-    #     [-1, -1, -1],
-    #     [-1, 8, -1],
-    #     [-1, -1, -1]]
-    # )
-    # kernel_main = np.array([
-    #     [2, 0],
-    #     [1, 0]], dtype=np.uint8)
-    #
-    # result = apply_filter(image_should_be_two_d, kernel_main)
+    image = cv2.imread('../tests/lenna.png')
+    image_np = np.array(image)
+    image_should_be_three_d = np.asarray(Image.open('../tests/lenna.png'), dtype=np.uint8)
+    image_should_be_two_d = np.average(image_should_be_three_d.astype(float), weights=[0.299, 0.587, 0.114],
+                                       axis=2).astype(np.uint8)
+    image_main = np.array([[[255, 0, 0], [0, 255, 0], [0, 0, 255]],
+                           [[128, 128, 128], [64, 64, 64], [192, 192, 192]],
+                           [[255, 255, 255], [0, 0, 0], [128, 128, 128]]])
+    kernel_main = np.array([
+        [-1, -1, -1],
+        [-1, 8, -1],
+        [-1, -1, -1]]
+    )
+    kernel_main = np.array([
+        [2, 0],
+        [1, 0]], dtype=np.uint8)
+
+    result = apply_filter(image_should_be_two_d, kernel_main)
