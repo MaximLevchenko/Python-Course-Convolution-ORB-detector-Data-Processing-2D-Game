@@ -43,6 +43,19 @@ This project focuses on implementing image filtering techniques using convolutio
 - `test_filtering.py`: Includes tests for validating the image filtering functions.
 - `demo.ipynb`: A Jupyter Notebook demonstrating the application of filters.
 
+### 4. Bomberman-Inspired Game
+
+The Bomberman-Inspired Game is developed using Python and the Pygame library. It features both single-player and multiplayer modes, offering a grid-based layout where players navigate through various obstacles, enemies, and destructible blocks. The objective is to strategically place bombs to eliminate enemies and clear paths through maze-like levels.
+
+- **Multiplayer Mode**: Allows two players to compete by navigating the grid, planting bombs, and outmaneuvering each other.
+- **Map Selection and Variations**: Includes different maps and supports custom map loading to enhance gameplay variety.
+- **Enhanced AI**: Implements Depth-First Search (DFS) and Dijkstra's algorithms for smarter enemy behavior.
+
+**Directory Structure:**
+- `src/`: Contains the main game source code.
+- `assets/`: Includes game assets like images and sounds.
+- `tests/`: Holds test scripts for various game functionalities.
+
 ## Purpose and Context
 
 These projects were developed as part of a university Python course, designed to introduce students to practical applications of Python in data analysis and computer vision. Each project emphasizes a different aspect of Python programming, from data preprocessing and statistical analysis to image processing and feature detection.
