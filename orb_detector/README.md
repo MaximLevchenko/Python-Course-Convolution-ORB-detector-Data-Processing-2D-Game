@@ -46,7 +46,7 @@ The above script reads an image, converts it to grayscale, and detects keypoints
 
 The functionality of the ORB implementation is validated through comprehensive tests in `test_orb.py`. The tests cover various aspects of the keypoint detection and filtering processes, ensuring robust and accurate implementation.
 ```bash
-python3 test_orb.py
+pytest test_orb.py
 ```
 
 ## Dependencies
